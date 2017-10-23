@@ -1,10 +1,17 @@
 package mx.josealmaraz.primerappkt
 
+import android.app.Activity
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
+    val Saludo = "Hola desde aqui"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,5 +23,30 @@ class MainActivity : AppCompatActivity() {
         //operaciones, interacciones. Ej:
         //Context: En este activity. Donde se va a renderizar la info.
         Toast.makeText(this,"Hola, Mundo!", Toast.LENGTH_SHORT).show()
+
+        //Cambia el texto del boton en tiempo de ejecucion
+        buttonCalcular.text = "Calcula tu edad"
+
+        //Declaracion de OnClickListener en Kotlin
+        buttonCalcular.setOnClickListener{
+            //Consigue el valor dentro del EditText
+            val anoNacimiento : Int = editText.text.toString().toInt()
+            val anoActual = Calendar.getInstance().get(Calendar.YEAR)
+            val miEdad = anoActual - anoNacimiento
+
+            textView.text = "Tu edad es $miEdad"
+        }
+
+        buttonSiguiente.setOnClickListener{
+            startActivity(this, SecondActivity::class.java)
+        }
+    }
+
+    fun startActivity(activity: Activity, nextActivity: Class<*>){
+        val intent = Intent(activity, nextActivity)
+        //Se pone un extra para enviar al siguiente Activitiy
+        intent.putExtra("saludo", Saludo)
+        activity.startActivity(intent)
+        activity.finish()
     }
 }
