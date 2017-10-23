@@ -43,10 +43,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun startActivity(activity: Activity, nextActivity: Class<*>){
-        val intent = Intent(activity, nextActivity)
+        val intentSecond = Intent(activity, nextActivity)
         //Se pone un extra para enviar al siguiente Activitiy
-        intent.putExtra("saludo", Saludo)
-        activity.startActivity(intent)
+        intentSecond.putExtra("saludo", Saludo)
+        activity.startActivity(intentSecond)
         activity.finish()
     }
 }
