@@ -27,5 +27,10 @@ class SecondActivity : AppCompatActivity() {
             //En caso de que no encuentre la variable, se manda un mensaje al usuario
             Toast.makeText(this, "No llego dato", Toast.LENGTH_SHORT).show()
         }
+
+        buttonThird.setOnClickListener{
+            val intent = Intent(this, ThirdActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
