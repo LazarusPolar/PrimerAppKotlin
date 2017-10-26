@@ -72,10 +72,10 @@ class ThirdActivity : AppCompatActivity() {
 
         // Para llamada a Web
         imageButtonWeb.setOnClickListener {
-            var URL = editTextWeb.text.toString()
+            var URL = editTextWeb!!.text.toString()
             var intentWeb = Intent()
             intentWeb.action = Intent.ACTION_VIEW
-            intentWeb.data = Uri.parse("htto://" + URL)
+            intentWeb.data = Uri.parse("http://" + URL)
             startActivity(intentWeb)
         }
 
@@ -149,7 +149,7 @@ class ThirdActivity : AppCompatActivity() {
     }
 
     // Para opciones de menu desplegable se necesitan los siguientes dos metodos
-    
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         //Infla el menu creado en la carpeta /menu
         menuInflater.inflate(R.menu.menu, menu)

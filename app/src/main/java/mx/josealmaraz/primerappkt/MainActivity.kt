@@ -51,6 +51,6 @@ class MainActivity : AppCompatActivity() {
         //Se pone un extra para enviar al siguiente Activitiy
         intentSecond.putExtra("saludo", Saludo)
         activity.startActivity(intentSecond)
-        activity.finish()
+        //activity.finish()
     }
 }
