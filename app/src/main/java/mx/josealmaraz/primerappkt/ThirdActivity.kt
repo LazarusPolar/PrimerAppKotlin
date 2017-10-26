@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.support.v4.app.ActivityCompat
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_third.*
@@ -93,6 +95,11 @@ class ThirdActivity : AppCompatActivity() {
             startActivity(intentCall)
         }
 
+        imageButtonCamera.setOnClickListener {
+            val intentCamera = Intent("android.media.action.IMAGE_CAPTURE")
+            startActivity(intentCamera)
+        }
+
     }
 
     fun versionAntigua(phoneNumber: String){
@@ -109,7 +116,7 @@ class ThirdActivity : AppCompatActivity() {
     //Metodo asincrono para comprobar permisos
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when(requestCode){
-            //Caso de uso del codigo de telefono
+        //Caso de uso del codigo de telefono
             PHONE_CODE -> {
                 val permisos = permissions[0]
                 val result = grantResults[0]
@@ -139,5 +146,24 @@ class ThirdActivity : AppCompatActivity() {
     fun CheckPermission(permission: String): Boolean{
         val result = this.checkCallingOrSelfPermission(permission)
         return result == PackageManager.PERMISSION_GRANTED
+    }
+
+    // Para opciones de menu desplegable se necesitan los siguientes dos metodos
+    
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        //Infla el menu creado en la carpeta /menu
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item!!.itemId){
+            R.id.menuContactos -> {
+                //Se accede al menu de contactos
+                val intentContactos = Intent(Intent.ACTION_VIEW, Uri.parse("content://contacts/people"))
+                startActivity(intentContactos)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
