@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.support.v4.app.ActivityCompat
+import android.widget.EditText
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_third.*
 import java.util.jar.Manifest
@@ -45,7 +46,7 @@ class ThirdActivity : AppCompatActivity() {
                             requestPermissions(arrayOf(android.Manifest.permission.CALL_PHONE), PHONE_CODE)
                         } else {
                             Toast.makeText(this, "Por favor habilita el permiso correspondiente", Toast.LENGTH_LONG).show()
-                            // Se dirige a las opciones de la aplicacion
+                            // Se dirigree a las opciones de la aplicacion
                             val intentSettings = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                             intentSettings.addCategory(Intent.CATEGORY_DEFAULT)
                             intentSettings.data = Uri.parse("package:" + packageName) //Nombre del paquete
@@ -61,6 +62,15 @@ class ThirdActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Es necesario que ingreses un numero", Toast.LENGTH_LONG).show()
             }
+        }
+
+        // Para llamada a Web
+        imageButtonWeb.setOnClickListener {
+            var URL = editTextWeb.text.toString()
+            var intentWeb = Intent()
+            intentWeb.action = Intent.ACTION_VIEW
+            intentWeb.data = Uri.parse("htto://" + URL)
+            startActivity(intentWeb)
         }
 
     }
