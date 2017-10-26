@@ -13,6 +13,10 @@ class SecondActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
 
+        //Flecha para regresar
+        //Se modifico el Manifest para mandar la flecha al MainActivity
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
         //Depreciado
         //Ya no se permite declara de una manera en Kotlin
         //val textView = findViewById(R.id.textViewIntent) as TextView

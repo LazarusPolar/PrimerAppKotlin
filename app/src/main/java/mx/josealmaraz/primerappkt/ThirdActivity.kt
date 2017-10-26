@@ -21,6 +21,10 @@ class ThirdActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_third)
 
+        //Flecha para regresar
+        //Se modifico el Manifest para mandar la flecha al MainActivity
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
         //Esta parte se convierte en un Lambda quedando de la siguiente manera
         /*imageButtonPhone.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?){
@@ -71,6 +75,22 @@ class ThirdActivity : AppCompatActivity() {
             intentWeb.action = Intent.ACTION_VIEW
             intentWeb.data = Uri.parse("htto://" + URL)
             startActivity(intentWeb)
+        }
+
+        buttonEmailMe.setOnClickListener {
+            val email = "miemail@gmail.com"
+
+            val intentMail = Intent(Intent.ACTION_SEND, Uri.parse(email))
+            intentMail.type = "plain/text"
+            intentMail.putExtra(Intent.EXTRA_SUBJECT, "Titulo del correo")
+            intentMail.putExtra(Intent.EXTRA_TEXT, "Cuerpo del correo")
+            intentMail.putExtra(Intent.EXTRA_EMAIL, arrayOf("alguien|gmail.com, alguien2@gmail.com"))
+            startActivity(Intent.createChooser(intentMail, "Elige cliente del correo"))
+        }
+
+        buttonContactPhone.setOnClickListener{
+            val intentCall = Intent(Intent.ACTION_DIAL, Uri.parse("tel:999999999999"))
+            startActivity(intentCall)
         }
 
     }

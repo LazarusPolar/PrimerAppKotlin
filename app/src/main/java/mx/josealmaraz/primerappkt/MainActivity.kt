@@ -16,6 +16,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        //Forzar icono en el ActionBar
+        supportActionBar!!.setDisplayShowHomeEnabled(true)
+        supportActionBar!!.setIcon(R.mipmap.ic_launcher)
+
         //Un activity es la ventana de la aplicacion (La vista): Lo que el usuario ve
         //Contiene la parte logica (onCreate) y la parte del diseño (layout)
 
