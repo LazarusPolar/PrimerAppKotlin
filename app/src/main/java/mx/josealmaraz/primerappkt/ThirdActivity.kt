@@ -13,6 +13,10 @@ import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_third.*
+import org.jetbrains.anko.browse
+import org.jetbrains.anko.email
+import org.jetbrains.anko.longToast
+import org.jetbrains.anko.makeCall
 import java.util.jar.Manifest
 
 class ThirdActivity : AppCompatActivity() {
@@ -51,7 +55,7 @@ class ThirdActivity : AppCompatActivity() {
                         if(!shouldShowRequestPermissionRationale(android.Manifest.permission.CALL_PHONE)){
                             requestPermissions(arrayOf(android.Manifest.permission.CALL_PHONE), PHONE_CODE)
                         } else {
-                            Toast.makeText(this, "Por favor habilita el permiso correspondiente", Toast.LENGTH_LONG).show()
+                            longToast("Por favor habilita el permiso correspondiente")
                             // Se dirigree a las opciones de la aplicacion
                             val intentSettings = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                             intentSettings.addCategory(Intent.CATEGORY_DEFAULT)
@@ -66,33 +70,41 @@ class ThirdActivity : AppCompatActivity() {
                     versionAntigua(phoneNumber)
                 }
             } else {
-                Toast.makeText(this, "Es necesario que ingreses un numero", Toast.LENGTH_LONG).show()
+                longToast("Es necesario que ingreses un numero")
+                //Toast.makeText(this, "Es necesario que ingreses un numero", Toast.LENGTH_LONG).show()
             }
         }
 
         // Para llamada a Web
         imageButtonWeb.setOnClickListener {
             var URL = editTextWeb!!.text.toString()
-            var intentWeb = Intent()
+            //Anko Browse
+            browse(URL)
+            /*var intentWeb = Intent()
             intentWeb.action = Intent.ACTION_VIEW
             intentWeb.data = Uri.parse("http://" + URL)
-            startActivity(intentWeb)
+            startActivity(intentWeb)*/
         }
 
         buttonEmailMe.setOnClickListener {
             val email = "miemail@gmail.com"
-
+            val mailAlguien = "alguien@gmail.com"
+            email(mailAlguien, "Titlo del mail", "Cuerpo del mail")
+            /*
             val intentMail = Intent(Intent.ACTION_SEND, Uri.parse(email))
             intentMail.type = "plain/text"
             intentMail.putExtra(Intent.EXTRA_SUBJECT, "Titulo del correo")
             intentMail.putExtra(Intent.EXTRA_TEXT, "Cuerpo del correo")
             intentMail.putExtra(Intent.EXTRA_EMAIL, arrayOf("alguien|gmail.com, alguien2@gmail.com"))
-            startActivity(Intent.createChooser(intentMail, "Elige cliente del correo"))
+            startActivity(Intent.createChooser(intentMail, "Elige cliente del correo"))*/
         }
 
         buttonContactPhone.setOnClickListener{
+            makeCall("9912191212")
+            /*
             val intentCall = Intent(Intent.ACTION_DIAL, Uri.parse("tel:999999999999"))
             startActivity(intentCall)
+            */
         }
 
         imageButtonCamera.setOnClickListener {
@@ -108,7 +120,9 @@ class ThirdActivity : AppCompatActivity() {
             if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
                 return
             }
-            startActivity(intentCall)
+            //startActivity(intentCall)
+            //Anko Call
+            makeCall(phoneNumber)
         }
     }
 

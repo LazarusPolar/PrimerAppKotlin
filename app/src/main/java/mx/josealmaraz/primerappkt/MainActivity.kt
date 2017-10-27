@@ -7,6 +7,9 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.longToast
+import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -26,7 +29,12 @@ class MainActivity : AppCompatActivity() {
         //En el activity se tiene un context asignado. Sirve para poder recibir intents
         //operaciones, interacciones. Ej:
         //Context: En este activity. Donde se va a renderizar la info.
-        Toast.makeText(this,"Hola, Mundo!", Toast.LENGTH_SHORT).show()
+
+        //NORMAL TOAST
+        //Toast.makeText(this,"Hola, Mundo!", Toast.LENGTH_SHORT).show()
+
+        //ANKO TOAST
+        longToast("Soy un Anko Toast")
 
         //Cambia el texto del boton en tiempo de ejecucion
         buttonCalcular.text = "Calcula tu edad"
@@ -37,8 +45,10 @@ class MainActivity : AppCompatActivity() {
             val anoNacimiento : Int = editText.text.toString().toInt()
             val anoActual = Calendar.getInstance().get(Calendar.YEAR)
             val miEdad = anoActual - anoNacimiento
+            //textView.text = "Tu edad es $miEdad"
 
-            textView.text = "Tu edad es $miEdad"
+            //Intent explicito con Anko
+            startActivity<SecondActivity>("edad" to miEdad)
         }
 
         buttonSiguiente.setOnClickListener{
