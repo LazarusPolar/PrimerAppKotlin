@@ -17,6 +17,7 @@ import org.jetbrains.anko.browse
 import org.jetbrains.anko.email
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.makeCall
+import org.jetbrains.anko.sdk25.coroutines.onClick
 import java.util.jar.Manifest
 
 class ThirdActivity : AppCompatActivity() {
@@ -76,10 +77,11 @@ class ThirdActivity : AppCompatActivity() {
         }
 
         // Para llamada a Web
-        imageButtonWeb.setOnClickListener {
+        // Llamada de Anko OnClick
+        imageButtonWeb.onClick {
             var URL = editTextWeb!!.text.toString()
             //Anko Browse
-            browse(URL)
+            browse("http://$URL")
             /*var intentWeb = Intent()
             intentWeb.action = Intent.ACTION_VIEW
             intentWeb.data = Uri.parse("http://" + URL)
