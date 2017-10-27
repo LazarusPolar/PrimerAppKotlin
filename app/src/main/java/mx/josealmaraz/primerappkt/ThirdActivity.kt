@@ -7,16 +7,15 @@ import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
+import android.support.annotation.RequiresApi
 import android.support.v4.app.ActivityCompat
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_third.*
-import org.jetbrains.anko.browse
-import org.jetbrains.anko.email
-import org.jetbrains.anko.longToast
-import org.jetbrains.anko.makeCall
+import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import java.util.jar.Manifest
 
@@ -38,43 +37,65 @@ class ThirdActivity : AppCompatActivity() {
 
             }
         })*/
+        imageButtonPhone.setOnClickListener(object : View.OnClickListener {
+            @RequiresApi(Build.VERSION_CODES.M)
+            override fun onClick(v: View?) {
+                val phoneNumber = editTextPhone!!.text.toString()
+                if(!phoneNumber.isEmpty()){
+                    // Solicita permisos en tiempos de ejecucion Marshmallow +
+                    //if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
 
-        imageButtonPhone.setOnClickListener {
-            val phoneNumber = editTextPhone!!.text.toString()
-            if(!phoneNumber.isEmpty()){
-                // Solicita permisos en tiempos de ejecucion Marshmallow +
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    //Se revisa que el permiso esta aceptado
-                    if(CheckPermission(android.Manifest.permission.CALL_PHONE)){
-                        val intentAceptado  = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber))
-                        if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
-                            return@setOnClickListener
-                        }
-                        startActivity(intentAceptado)
-                    } else {
-                        //Muestra ventana para pedir permisos
-                        if(!shouldShowRequestPermissionRationale(android.Manifest.permission.CALL_PHONE)){
-                            requestPermissions(arrayOf(android.Manifest.permission.CALL_PHONE), PHONE_CODE)
+                    //Anko : Verificador de versiones mayor a Lolipop
+                    doFromSdk(Build.VERSION_CODES.LOLLIPOP){
+                        //Se revisa que el permiso esta aceptado
+                        if(CheckPermission(android.Manifest.permission.CALL_PHONE)){
+                            val intentAceptado  = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber))
+                            if(ActivityCompat.checkSelfPermission(this@ThirdActivity, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+                                return
+                            }
+                            startActivity(intentAceptado)
                         } else {
-                            longToast("Por favor habilita el permiso correspondiente")
-                            // Se dirigree a las opciones de la aplicacion
-                            val intentSettings = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                            intentSettings.addCategory(Intent.CATEGORY_DEFAULT)
-                            intentSettings.data = Uri.parse("package:" + packageName) //Nombre del paquete
-                            intentSettings.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            intentSettings.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
-                            intentSettings.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS) //Regresa a la pantalla de la aplicacion
-                            startActivity(intentSettings)
+                            //Muestra ventana para pedir permisos
+                            if(!shouldShowRequestPermissionRationale(android.Manifest.permission.CALL_PHONE)){
+                                requestPermissions(arrayOf(android.Manifest.permission.CALL_PHONE), PHONE_CODE)
+                            } else {
+                                longToast("Por favor habilita el permiso correspondiente")
+                                // Se dirigree a las opciones de la aplicacion
+                                val intentSettings = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                                intentSettings.addCategory(Intent.CATEGORY_DEFAULT)
+                                intentSettings.data = Uri.parse("package:" + packageName) //Nombre del paquete
+                                intentSettings.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                intentSettings.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                                intentSettings.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS) //Regresa a la pantalla de la aplicacion
+                                startActivity(intentSettings)
+                            }
                         }
+                    } //else  {
+                    
+                    //Anko : Verificador de versiones < Lolipop
+                    doIfSdk(Build.VERSION_CODES.LOLLIPOP){
+                        versionAntigua(phoneNumber)
                     }
                 } else {
-                    versionAntigua(phoneNumber)
+                    longToast("Es necesario que ingreses un numero")
+                    //Toast.makeText(this, "Es necesario que ingreses un numero", Toast.LENGTH_LONG).show()
                 }
-            } else {
-                longToast("Es necesario que ingreses un numero")
-                //Toast.makeText(this, "Es necesario que ingreses un numero", Toast.LENGTH_LONG).show()
             }
-        }
+
+            //Se coloca dentro de los metodos del ClickListener
+            fun versionAntigua(phoneNumber: String){
+                val intentCall = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber))
+                if(CheckPermission(android.Manifest.permission.CALL_PHONE)){
+                    if(ActivityCompat.checkSelfPermission(this@ThirdActivity, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+                        return
+                    }
+                    //startActivity(intentCall)
+                    //Anko Call
+                    makeCall(phoneNumber)
+                }
+            }
+
+        })
 
         // Para llamada a Web
         // Llamada de Anko OnClick
@@ -116,18 +137,6 @@ class ThirdActivity : AppCompatActivity() {
 
     }
 
-    fun versionAntigua(phoneNumber: String){
-        val intentCall = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber))
-        if(CheckPermission(android.Manifest.permission.CALL_PHONE)){
-            if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
-                return
-            }
-            //startActivity(intentCall)
-            //Anko Call
-            makeCall(phoneNumber)
-        }
-    }
-
 
     //Metodo asincrono para comprobar permisos
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -165,7 +174,6 @@ class ThirdActivity : AppCompatActivity() {
     }
 
     // Para opciones de menu desplegable se necesitan los siguientes dos metodos
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         //Infla el menu creado en la carpeta /menu
         menuInflater.inflate(R.menu.menu, menu)
