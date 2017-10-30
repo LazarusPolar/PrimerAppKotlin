@@ -5,4 +5,14 @@
         android:id="@+id/menuContactos"
         android:title="Contactos"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menuCompartir"
+        android:title="Compartir"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menuSMS"
+        android:title="Enviar mensaje SMS"
+        app:showAsAction="never" />
 </menu>

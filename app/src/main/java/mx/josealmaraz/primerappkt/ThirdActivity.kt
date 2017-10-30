@@ -19,6 +19,8 @@ import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import java.util.jar.Manifest
 
+// TODO: Limpiar codigo para libreria Anko
+
 class ThirdActivity : AppCompatActivity() {
 
     private val PHONE_CODE = 4000
@@ -49,11 +51,14 @@ class ThirdActivity : AppCompatActivity() {
                     doFromSdk(Build.VERSION_CODES.LOLLIPOP){
                         //Se revisa que el permiso esta aceptado
                         if(CheckPermission(android.Manifest.permission.CALL_PHONE)){
-                            val intentAceptado  = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber))
+                            //Se comenta para remplazarlo con makeCall(PN) de Anko
+                            //val intentAceptado  = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber))
+
                             if(ActivityCompat.checkSelfPermission(this@ThirdActivity, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
                                 return
                             }
-                            startActivity(intentAceptado)
+                            //startActivity(intentAceptado)
+                            makeCall(phoneNumber)
                         } else {
                             //Muestra ventana para pedir permisos
                             if(!shouldShowRequestPermissionRationale(android.Manifest.permission.CALL_PHONE)){
@@ -71,7 +76,7 @@ class ThirdActivity : AppCompatActivity() {
                             }
                         }
                     } //else  {
-                    
+
                     //Anko : Verificador de versiones < Lolipop
                     doIfSdk(Build.VERSION_CODES.LOLLIPOP){
                         versionAntigua(phoneNumber)
@@ -186,6 +191,14 @@ class ThirdActivity : AppCompatActivity() {
                 //Se accede al menu de contactos
                 val intentContactos = Intent(Intent.ACTION_VIEW, Uri.parse("content://contacts/people"))
                 startActivity(intentContactos)
+            }
+
+            R.id.menuCompartir -> {
+                share("Anko esta genial", "Anko para Android Kotlin")
+            }
+
+            R.id.menuSMS -> {
+                sendSMS("5555071846", "Mensaje enviado con Anko Android")
             }
         }
         return super.onOptionsItemSelected(item)
