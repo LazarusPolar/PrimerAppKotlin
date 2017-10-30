@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Intents Kotlin</string>
+    <string name="main_longToast">Soy un Anko Toast</string>
+    <string name="main_alertMensaje">Soy un mensaje en Anko</string>
+    <string name="main_alertTitulo">Alerta Anko</string>
+    <string name="main_alertYes">Bien!</string>
+    <string name="main_alertNo">Este alert es mas simple</string>
+    <string name="main_selectorTitulo">¿De que pais eres?</string>
+    <string name="main_selectorEleccion">Bien, eres de</string>
+    <string name="main_progressMensaje">Espere un momento</string>
+    <string name="main_progressTitulo">Progress Dialog de Anko</string>
+</resources>

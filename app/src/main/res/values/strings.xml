@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Intents Kotlin</string>
+    <string name="main_longToast">I am an Anko Toast</string>
+    <string name="main_alertMensaje">I am an Anko Message</string>
+    <string name="main_alertTitulo">Anko Alert</string>
+    <string name="main_alertYes">Nice!!</string>
+    <string name="main_alertNo">This alert is really simple</string>
+    <string name="main_selectorTitulo">Which country are you from?</string>
+    <string name="main_selectorEleccion">"Good, you are from: "</string>
+    <string name="main_progressMensaje">Wait a moment</string>
+    <string name="main_progressTitulo">Anko\'s Progress Dialog</string>
 </resources>

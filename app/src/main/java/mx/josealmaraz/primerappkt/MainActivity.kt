@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         //Toast.makeText(this,"Hola, Mundo!", Toast.LENGTH_SHORT).show()
 
         //ANKO TOAST
-        longToast("Soy un Anko Toast")
+        longToast(getString(R.string.main_longToast))
 
         //Cambia el texto del boton en tiempo de ejecucion
         buttonCalcular.text = "Calcula tu edad"
@@ -57,17 +57,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         //Ejemplo de Alerta simple
-        btnSimple.onClick { alert("Soy un mensaje en Anko", "Alerta Anko") {
-            yesButton { toast("Bien!") }
-            noButton { toast("Este alert es mas simple") }
+        btnSimple.onClick { alert(getString(R.string.main_alertMensaje), getString(R.string.main_alertTitulo)) {
+            yesButton { toast(getString(R.string.main_alertYes)) }
+            noButton { toast(getString(R.string.main_alertNo)) }
         }.show() }
 
         //Ejemplo de Alert con Selector de opciones
         btnList.onClick { val paises = listOf("MEX", "ESP", "ARG", "BOL", "CHI", "COL")
-        selector("¿De que pais eres?", paises, {dialogInterface, i ->  longToast("Bien, eres de ${paises[i]}")})}
+        selector(getString(R.string.main_selectorTitulo), paises, { dialogInterface, i ->  longToast(getString(R.string.main_selectorEleccion) + paises[i])})}
 
         //Ejemplo de ProgressDialog
-        btnProgreso.onClick { val dialogo = progressDialog (message = "Espere un momento", title = "Progress Dialog de Anko")   }
+        btnProgreso.onClick { val dialogo = progressDialog (message = getString(R.string.main_progressMensaje), title = getString(R.string.main_progressTitulo))   }
     }
 
     fun startActivity(activity: Activity, nextActivity: Class<*>){
