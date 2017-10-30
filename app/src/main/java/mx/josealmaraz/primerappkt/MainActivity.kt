@@ -1,15 +1,16 @@
 package mx.josealmaraz.primerappkt
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.longToast
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
+import kotlinx.coroutines.experimental.selects.select
+import org.jetbrains.anko.*
+import org.jetbrains.anko.sdk25.coroutines.onClick
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -54,6 +55,19 @@ class MainActivity : AppCompatActivity() {
         buttonSiguiente.setOnClickListener{
             startActivity(this, SecondActivity::class.java)
         }
+
+        //Ejemplo de Alerta simple
+        btnSimple.onClick { alert("Soy un mensaje en Anko", "Alerta Anko") {
+            yesButton { toast("Bien!") }
+            noButton { toast("Este alert es mas simple") }
+        }.show() }
+
+        //Ejemplo de Alert con Selector de opciones
+        btnList.onClick { val paises = listOf("MEX", "ESP", "ARG", "BOL", "CHI", "COL")
+        selector("¿De que pais eres?", paises, {dialogInterface, i ->  longToast("Bien, eres de ${paises[i]}")})}
+
+        //Ejemplo de ProgressDialog
+        btnProgreso.onClick { val dialogo = progressDialog (message = "Espere un momento", title = "Progress Dialog de Anko")   }
     }
 
     fun startActivity(activity: Activity, nextActivity: Class<*>){
