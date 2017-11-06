@@ -12,12 +12,10 @@ import android.support.v4.app.ActivityCompat
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.EditText
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_third.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
-import java.util.jar.Manifest
 
 // TODO: Limpiar codigo para libreria Anko
 

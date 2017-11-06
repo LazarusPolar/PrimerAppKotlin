@@ -1,14 +1,10 @@
 package mx.josealmaraz.primerappkt
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.experimental.selects.select
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import java.util.*

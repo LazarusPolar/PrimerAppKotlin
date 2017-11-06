@@ -1,10 +1,7 @@
 package mx.josealmaraz.primerappkt
 
-import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_second.*
 import org.jetbrains.anko.startActivity
 
